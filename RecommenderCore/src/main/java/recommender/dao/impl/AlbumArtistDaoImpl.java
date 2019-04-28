@@ -1,7 +1,8 @@
 package recommender.dao.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import recommender.core.entities.AlbumArtist;
 import recommender.dao.IAlbumArtistDao;
@@ -12,7 +13,6 @@ import recommender.dao.IAlbumArtistDao;
  * AlbumArtistDaoImpl.java
  * Describe:
  */
-@Transactional
 @Repository
 public class AlbumArtistDaoImpl extends GenericDaoImpl<AlbumArtist> implements IAlbumArtistDao
 {
@@ -20,5 +20,19 @@ public class AlbumArtistDaoImpl extends GenericDaoImpl<AlbumArtist> implements I
 	public AlbumArtistDaoImpl()
 	{
 		;
+	}
+
+	@Override
+	public List<AlbumArtist> getAlbumArtistByAlbumId(int p_albumId)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AlbumArtist> getAlbumArtistByArtistId(int p_artistId)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

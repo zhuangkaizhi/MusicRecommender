@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import recommender.core.entities.Album;
 import recommender.core.entities.AlbumTrack;
+import recommender.core.entities.Artist;
 import recommender.core.entities.ArtistTrack;
 import recommender.core.entities.Track;
 import recommender.dao.IAlbumTrackDao;
@@ -70,9 +72,11 @@ public class TrackService implements IBaseService
 		}
 	}
 
-	public void saveRelationAlbum(int pAlbumId, int pTrackId)
+	public void saveRelationAlbum(Album pAlbum, Track pTrack)
 	{
-		AlbumTrack entity = new AlbumTrack(pAlbumId, pTrackId);
+		AlbumTrack entity = new AlbumTrack();
+		entity.setAlbumId(pAlbum.getAlbumId());
+		entity.setTrackId(pTrack.getTrackId());
 		try
 		{
 			albumTrackDao.create(entity);
@@ -83,9 +87,11 @@ public class TrackService implements IBaseService
 		}
 	}
 
-	public void saveRelationArtist(int pArtistId, int pTrackId)
+	public void saveRelationArtist(Artist pArtist, Track pTrack)
 	{
-		ArtistTrack entity = new ArtistTrack(pArtistId, pTrackId);
+		ArtistTrack entity = new ArtistTrack();
+		entity.setArtistId(pArtist.getArtistId());
+		entity.setTrackId(pTrack.getTrackId());
 		try
 		{
 			artistTrackDao.create(entity);

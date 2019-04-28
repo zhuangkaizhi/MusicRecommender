@@ -4,7 +4,6 @@ package recommender.core.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,13 +49,15 @@ public class UserInfo implements Serializable
 	
 	@Column(name="create_time", nullable=false)
 	private Timestamp createTime;
-
-	@OneToMany(mappedBy="userInfo")
+	
+	/*
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="userInfo")
 	private List<PlayLog> playLogs;
 
-	@OneToMany(mappedBy="userInfo")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="userInfo")
 	private List<UserRecommend> userRecommends;
-
+	*/
+	
 	public UserInfo() 
 	{
 		;
@@ -132,27 +132,5 @@ public class UserInfo implements Serializable
 	{
 		this.createTime = createTime;
 	}
-
-	public List<PlayLog> getPlayLogs()
-	{
-		return playLogs;
-	}
-
-	public void setPlayLogs(List<PlayLog> playLogs)
-	{
-		this.playLogs = playLogs;
-	}
-
-	public List<UserRecommend> getUserRecommends()
-	{
-		return userRecommends;
-	}
-
-	public void setUserRecommends(List<UserRecommend> userRecommends)
-	{
-		this.userRecommends = userRecommends;
-	}
-	
-	
 	
 }

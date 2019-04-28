@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 import recommender.core.entities.Album;
 import recommender.core.entities.AlbumTrack;
 import recommender.core.entities.Artist;
+import recommender.core.entities.Track;
 import recommender.dao.IAlbumDao;
+import recommender.dao.IAlbumTrackDao;
+import recommender.dao.IArtistDao;
+import recommender.dao.IArtistTrackDao;
+import recommender.dao.ITrackDao;
 import recommender.web.bean.RecommendAlbum;
 import recommender.web.bean.RecommendAlbumSlides;
 import recommender.web.service.IRecommenderService;
@@ -21,6 +26,21 @@ public class RecommenderServiceImpl implements IRecommenderService
 
 	@Autowired
 	private IAlbumDao albumDao;
+	
+	@Autowired
+	private IArtistDao artistDao;
+	
+	@Autowired
+	private ITrackDao trackDao;
+	
+	@Autowired
+	private IAlbumTrackDao albumTrackDao;
+	
+	@Autowired
+	private IArtistTrackDao artistTrackDao;
+	
+	
+	
 	
 	public RecommenderServiceImpl()
 	{
@@ -52,60 +72,104 @@ public class RecommenderServiceImpl implements IRecommenderService
 		List<RecommendAlbum> retList = new ArrayList<RecommendAlbum>();
 		Random rand = new Random();
 		// Obtain a number between [0 - 100].
-		long id1 = rand.nextInt(100) + 200;
+		long id1 = rand.nextInt(80) + 211;
 		long id2 = id1 + 1;
 		long id3 = id1 + 2;
 		long id4 = id1 + 3;
 		
 		Album obj1 = new Album();
 		obj1 = albumDao.findById(obj1, id1);
+		while (obj1==null || obj1.getAlbumId()== 0)
+		{
+			id1 = id1 + 1;
+			obj1 = albumDao.findById(obj1, id1);
+			if (id1 > 300)
+			{
+				return null;
+			}
+		}
 		RecommendAlbum r1 = new RecommendAlbum();
-		r1.setAlbumId(String.valueOf(obj1.getAlbum_id()));
+		r1.setAlbumId(String.valueOf(obj1.getAlbumId()));
 		r1.setAlbumName(obj1.getTitle());
 		r1.setAlbumDescribe(obj1.getLabel());
 		r1.setImageCover(obj1.getImageMedium());
-		r1.setDetailLink("/album?id="+ obj1.getAlbum_id());
-		List<AlbumTrack> lst1 = obj1.getAlbumTracks();
-		AlbumTrack albumTrack = lst1.get(0);
-		albumTrack.getTrack().getPreview_url();
-		
-		r1.setPlayLink(obj1.getAlbumTracks().get(0).getTrack().getPreview_url());
+		r1.setDetailLink("/album?id="+ obj1.getAlbumId());
+		List<AlbumTrack> lst1 = albumTrackDao.getAlbumTrackByAlbumId(obj1.getAlbumId());
+		AlbumTrack albumTrack1 = lst1.get(0);
+		Track track1 = trackDao.getTrackByTrackId(albumTrack1.getTrackId());
+		r1.setPlayLink(track1.getPreviewUrl());
 		retList.add(r1);
 		
 		//
 		Album obj2 = new Album();
 		obj2 = albumDao.findById(obj2, id2);
+		while (obj2==null || obj2.getAlbumId()== 0)
+		{
+			id2 = id2 + 1;
+			obj2 = albumDao.findById(obj2, id2);
+			if (id2 > 300)
+			{
+				return null;
+			}
+		}
 		RecommendAlbum r2 = new RecommendAlbum();
-		r2.setAlbumId(String.valueOf(obj2.getAlbum_id()));
+		r2.setAlbumId(String.valueOf(obj2.getAlbumId()));
 		r2.setAlbumName(obj2.getTitle());
 		r2.setAlbumDescribe(obj2.getLabel());
 		r2.setImageCover(obj2.getImageMedium());
-		r2.setDetailLink("/album?id="+ obj2.getAlbum_id());
-		r2.setPlayLink(obj2.getAlbumTracks().get(0).getTrack().getPreview_url());
+		r2.setDetailLink("/album?id="+ obj2.getAlbumId());
+		List<AlbumTrack> lst2 = albumTrackDao.getAlbumTrackByAlbumId(obj2.getAlbumId());
+		AlbumTrack albumTrack2 = lst2.get(0);
+		Track track2 = trackDao.getTrackByTrackId(albumTrack2.getTrackId());
+		r2.setPlayLink(track2.getPreviewUrl());
 		retList.add(r2);
 		
 		//
 		Album obj3 = new Album();
 		obj3 = albumDao.findById(obj3, id3);
+		while (obj3==null || obj3.getAlbumId()== 0)
+		{
+			id3 = id3 + 1;
+			obj3 = albumDao.findById(obj3, id3);
+			if (id3 > 300)
+			{
+				return null;
+			}
+		}
 		RecommendAlbum r3 = new RecommendAlbum();
-		r3.setAlbumId(String.valueOf(obj3.getAlbum_id()));
+		r3.setAlbumId(String.valueOf(obj3.getAlbumId()));
 		r3.setAlbumName(obj3.getTitle());
 		r3.setAlbumDescribe(obj3.getLabel());
 		r3.setImageCover(obj3.getImageMedium());
-		r3.setDetailLink("/album?id="+ obj3.getAlbum_id());
-		r3.setPlayLink(obj3.getAlbumTracks().get(0).getTrack().getPreview_url());
+		r3.setDetailLink("/album?id="+ obj3.getAlbumId());
+		List<AlbumTrack> lst3 = albumTrackDao.getAlbumTrackByAlbumId(obj3.getAlbumId());
+		AlbumTrack albumTrack3 = lst3.get(0);
+		Track track3 = trackDao.getTrackByTrackId(albumTrack3.getTrackId());
+		r3.setPlayLink(track3.getPreviewUrl());
 		retList.add(r3);
 		
 		//
 		Album obj4 = new Album();
 		obj4 = albumDao.findById(obj4, id4);
+		while (obj4==null || obj4.getAlbumId()== 0)
+		{
+			id4 = id4 + 1;
+			obj4 = albumDao.findById(obj4, id4);
+			if (id4 > 300)
+			{
+				return null;
+			}
+		}
 		RecommendAlbum r4 = new RecommendAlbum();
-		r4.setAlbumId(String.valueOf(obj4.getAlbum_id()));
+		r4.setAlbumId(String.valueOf(obj4.getAlbumId()));
 		r4.setAlbumName(obj4.getTitle());
 		r4.setAlbumDescribe(obj4.getLabel());
 		r4.setImageCover(obj4.getImageMedium());
-		r4.setDetailLink("/album?id="+ obj4.getAlbum_id());
-		r4.setPlayLink(obj4.getAlbumTracks().get(0).getTrack().getPreview_url());
+		r4.setDetailLink("/album?id="+ obj4.getAlbumId());
+		List<AlbumTrack> lst4 = albumTrackDao.getAlbumTrackByAlbumId(obj4.getAlbumId());
+		AlbumTrack albumTrack4 = lst4.get(0);
+		Track track4 = trackDao.getTrackByTrackId(albumTrack4.getTrackId());
+		r4.setPlayLink(track4.getPreviewUrl());
 		retList.add(r4);
 		
 		return retList;

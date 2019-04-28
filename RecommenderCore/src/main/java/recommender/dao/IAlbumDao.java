@@ -10,5 +10,5 @@ import recommender.core.entities.Album;
  */
 public interface IAlbumDao extends IGenericDao<Album>
 {
-	
+	public Album getAlbumByAlbumId(int p_AlbumId);
 }

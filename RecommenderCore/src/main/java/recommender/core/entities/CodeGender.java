@@ -2,7 +2,6 @@
 package recommender.core.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,10 +25,12 @@ public class CodeGender implements Serializable
 
 	@Column(name = "gender_name")
 	private String genderName;
-
-	@OneToMany(mappedBy = "codeGender")
+	
+	/*
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "codeGender")
 	private List<UserInfo> userInfos;
-
+	*/
+	
 	public CodeGender()
 	{
 		;
@@ -56,30 +56,6 @@ public class CodeGender implements Serializable
 		this.genderName = genderName;
 	}
 
-	public List<UserInfo> getUserInfos()
-	{
-		return this.userInfos;
-	}
-
-	public void setUserInfos(List<UserInfo> userInfos)
-	{
-		this.userInfos = userInfos;
-	}
-
-	public UserInfo addUserInfo(UserInfo userInfo)
-	{
-		getUserInfos().add(userInfo);
-		userInfo.setCodeGender(this);
-
-		return userInfo;
-	}
-
-	public UserInfo removeUserInfo(UserInfo userInfo)
-	{
-		getUserInfos().remove(userInfo);
-		userInfo.setCodeGender(null);
-
-		return userInfo;
-	}
+	
 
 }

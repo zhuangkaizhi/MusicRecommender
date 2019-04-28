@@ -304,8 +304,25 @@ a.article:hover {
     max-height: 100%;
 }
 
+.carousel-img:hover 
+{
+    cursor: pointer;
+    background-color: #232323;
+}
+
+
 .col-sm-3 {
 	padding-left: 0px;
 	padding-right: 15px;
 }
+
+.playBar{
+
+    position: absolute;
+    bottom: 0px;
+    right: 50px;
+
+}
+
+
 

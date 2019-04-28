@@ -26,7 +26,7 @@ public class PlayLog implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
-	private String id;
+	private long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "track_id", nullable = false)
@@ -61,13 +61,13 @@ public class PlayLog implements Serializable
 	{
 		;
 	}
-
-	public String getId()
+	
+	public long getId()
 	{
 		return id;
 	}
 
-	public void setId(String id)
+	public void setId(long id)
 	{
 		this.id = id;
 	}

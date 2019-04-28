@@ -3,6 +3,7 @@ package recommender.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import recommender.core.entities.Album;
 import recommender.core.entities.AlbumArtist;
 import recommender.core.entities.Artist;
 import recommender.dao.IAlbumArtistDao;
@@ -46,9 +47,11 @@ public class ArtistService implements IBaseService
 		}
 	}
 
-	public void saveRelationAlbum(int pAlbumId, int pArtistId)
+	public void saveRelationAlbum(Album pAlbum, Artist pArtist)
 	{
-		AlbumArtist entity = new AlbumArtist(pAlbumId, pArtistId);
+		AlbumArtist entity = new AlbumArtist();
+		entity.setAlbumId(pAlbum.getAlbumId()); 
+		entity.setArtistId(pArtist.getArtistId());
 		try
 		{
 			albumArtistDao.create(entity);

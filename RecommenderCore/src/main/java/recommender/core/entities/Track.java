@@ -2,7 +2,6 @@ package recommender.core.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +23,7 @@ public class Track implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
-	private String id;
+	private long id;
 
 	@Column(name = "track_id", unique = true, nullable = false)
 	private int trackId;
@@ -52,30 +50,31 @@ public class Track implements Serializable
 	@Column(name = "preview_url", length = 500)
 	private String previewUrl;
 	
-
-	@OneToMany(mappedBy = "track")
+	/*
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
 	private List<AlbumTrack> albumTracks;
 
-	@OneToMany(mappedBy = "track")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
 	private List<ArtistTrack> artistTracks;
 
-	@OneToMany(mappedBy = "track")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
 	private List<PlayLog> playLogs;
 
 	@OneToMany(mappedBy = "track")
 	private List<UserRecommend> userRecommends;
+	*/
 
 	public Track()
 	{
 		;
 	}
 
-	public String getId()
+	public long getId()
 	{
 		return id;
 	}
 
-	public void setId(String id)
+	public void setId(long id)
 	{
 		this.id = id;
 	}
@@ -160,44 +159,6 @@ public class Track implements Serializable
 		this.previewUrl = previewUrl;
 	}
 
-	public List<AlbumTrack> getAlbumTracks()
-	{
-		return albumTracks;
-	}
-
-	public void setAlbumTracks(List<AlbumTrack> albumTracks)
-	{
-		this.albumTracks = albumTracks;
-	}
-
-	public List<ArtistTrack> getArtistTracks()
-	{
-		return artistTracks;
-	}
-
-	public void setArtistTracks(List<ArtistTrack> artistTracks)
-	{
-		this.artistTracks = artistTracks;
-	}
-
-	public List<PlayLog> getPlayLogs()
-	{
-		return playLogs;
-	}
-
-	public void setPlayLogs(List<PlayLog> playLogs)
-	{
-		this.playLogs = playLogs;
-	}
-
-	public List<UserRecommend> getUserRecommends()
-	{
-		return userRecommends;
-	}
-
-	public void setUserRecommends(List<UserRecommend> userRecommends)
-	{
-		this.userRecommends = userRecommends;
-	}
+	
 	
 }

@@ -2,7 +2,6 @@ package recommender.core.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +26,7 @@ public class Album implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private String id;
+	private long id;
 
 	@Column(name="album_id", unique=true, nullable=false)
 	private int albumId;
@@ -80,23 +78,26 @@ public class Album implements Serializable
 	@Column(length=50)
 	private String type;
 
-	@OneToMany(mappedBy="album")
+	/*
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="album")
 	private List<AlbumArtist> albumArtists;
 
-	@OneToMany(mappedBy="album")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="album")
 	private List<AlbumTrack> albumTracks;
-
+	*/
+	
+	
 	public Album()
 	{
 		
 	}
 
-	public String getId()
+	public long getId()
 	{
 		return id;
 	}
 
-	public void setId(String id)
+	public void setId(long id)
 	{
 		this.id = id;
 	}
@@ -259,26 +260,6 @@ public class Album implements Serializable
 	public void setType(String type)
 	{
 		this.type = type;
-	}
-
-	public List<AlbumArtist> getAlbumArtists()
-	{
-		return albumArtists;
-	}
-
-	public void setAlbumArtists(List<AlbumArtist> albumArtists)
-	{
-		this.albumArtists = albumArtists;
-	}
-
-	public List<AlbumTrack> getAlbumTracks()
-	{
-		return albumTracks;
-	}
-
-	public void setAlbumTracks(List<AlbumTrack> albumTracks)
-	{
-		this.albumTracks = albumTracks;
 	}
 	
 }

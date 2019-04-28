@@ -1,5 +1,7 @@
 package recommender.dao;
 
+import java.util.List;
+
 import recommender.core.entities.AlbumArtist;
 
 /**
@@ -10,5 +12,7 @@ import recommender.core.entities.AlbumArtist;
  */
 public interface IAlbumArtistDao extends IGenericDao<AlbumArtist>
 {
+	public List<AlbumArtist> getAlbumArtistByAlbumId(int p_albumId);
 	
+	public List<AlbumArtist> getAlbumArtistByArtistId(int p_artistId);
 }

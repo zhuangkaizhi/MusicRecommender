@@ -1,7 +1,8 @@
 package recommender.dao.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import recommender.core.entities.ArtistTrack;
 import recommender.dao.IArtistTrackDao;
@@ -12,12 +13,25 @@ import recommender.dao.IArtistTrackDao;
  * ArtistTrackDaoImpl.java
  * Describe:
  */
-@Transactional
 @Repository
 public class ArtistTrackDaoImpl extends GenericDaoImpl<ArtistTrack> implements IArtistTrackDao
 {
 	public ArtistTrackDaoImpl()
 	{
 		;
+	}
+
+	@Override
+	public List<ArtistTrack> getArtistTrackByArtistId(int p_artistId)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ArtistTrack> getArtistTrackByTrackId(int p_trackId)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

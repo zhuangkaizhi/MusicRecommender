@@ -10,5 +10,6 @@ import recommender.core.entities.Artist;
  */
 public interface IArtistDao extends IGenericDao<Artist>
 {
+	public Artist getArtistByArtistId(int p_ArtistId);
 	
 }

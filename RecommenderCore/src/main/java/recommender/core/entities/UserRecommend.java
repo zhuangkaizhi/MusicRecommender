@@ -18,7 +18,7 @@ public class UserRecommend implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
-	private String id;
+	private long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -35,7 +35,6 @@ public class UserRecommend implements Serializable
 	@Column(name = "recommend_system", length = 255)
 	private String recommendSystem;
 	
-	
 	@Column(length = 500)
 	private String reasons;
 
@@ -45,24 +44,20 @@ public class UserRecommend implements Serializable
 		;
 	}
 
-
-	public String getId()
+	public long getId()
 	{
 		return id;
 	}
 
-
-	public void setId(String id)
+	public void setId(long id)
 	{
 		this.id = id;
 	}
-
 
 	public UserInfo getUserInfo()
 	{
 		return userInfo;
 	}
-
 
 	public void setUserInfo(UserInfo userInfo)
 	{

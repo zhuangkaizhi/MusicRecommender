@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import app.utilities.DateUtilZ;
 import recommender.core.entities.Album;
 import recommender.core.entities.AlbumArtist;
+import recommender.core.entities.Artist;
 import recommender.dao.IAlbumDao;
 import recommender.download.pojo_json.JsonAlbum;
 import recommender.download.pojo_json.JsonArtist;
@@ -84,8 +85,18 @@ public class AlbumDownloadService implements IBaseService
 			if (artist !=null && artist.getId() != 0)
 			{
 				List<AlbumArtist> lst = new ArrayList<AlbumArtist>();
-				AlbumArtist obj = new AlbumArtist(jsonObject.getId(),artist.getId());
+				//AlbumArtist obj = new AlbumArtist(jsonObject.getId(),artist.getId());
+				AlbumArtist obj = new AlbumArtist();
+				Album album = new Album();
+				album.setAlbumId(jsonObject.getId());
+				obj.setAlbum(album);
+				
+				Artist artistEntity = new Artist();
+				artistEntity.setArtistId(artist.getId());
+				obj.setArtist(artistEntity);
+				
 				lst.add(obj);
+				
 				entity.setAlbumArtists(lst);
 			}
 			

@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -23,14 +20,15 @@ public class ArtistTrack implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private String id;
+	private long id;
 
 	@Column(name="artist_id", nullable=false)
 	private int artistId;
 	
 	@Column(name="track_id", nullable=false)
 	private int trackId;
-	
+
+	/*
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="artist_id", nullable=false)
 	private Artist artist;
@@ -38,46 +36,21 @@ public class ArtistTrack implements Serializable
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="track_id", nullable=false)
 	private Track track;
-
+	*/
+	
 	public ArtistTrack() 
 	{
 		;
 	}
-	
-	public ArtistTrack(int p_artistId, int p_trackId) 
-	{
-		this.artistId = p_artistId;
-		this.trackId = p_trackId;
-	}
-	
-	public String getId()
+
+	public long getId()
 	{
 		return id;
 	}
 
-	public void setId(String id)
+	public void setId(long id)
 	{
 		this.id = id;
-	}
-
-	public Artist getArtist()
-	{
-		return artist;
-	}
-
-	public void setArtist(Artist artist)
-	{
-		this.artist = artist;
-	}
-
-	public Track getTrack()
-	{
-		return track;
-	}
-
-	public void setTrack(Track track)
-	{
-		this.track = track;
 	}
 
 	public int getArtistId()
@@ -99,7 +72,5 @@ public class ArtistTrack implements Serializable
 	{
 		this.trackId = trackId;
 	}
-	
-	
 	
 }

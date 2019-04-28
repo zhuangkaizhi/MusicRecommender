@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-var contentModule = angular.module('contentManager', []);
+var contentModule = angular.module('contentManager', ['ngAnimate']);
 
-contentModule.controller('contentController', function ($scope, $http, $window) 
+contentModule.controller('contentController', function ($scope, $http, $window ) 
 {
 	var urlBase="http://localhost:8080/recommender";
 	
@@ -38,7 +38,13 @@ contentModule.controller('contentController', function ($scope, $http, $window)
 		});
 	}
 
-	
+    
+    $scope.playMusic = function playMusic( data )
+	{
+        play(data);
+    }
+
+
 	//==========================================
 	$scope.formatDate = function formatDate(x, y) 
 	{
@@ -107,3 +113,13 @@ contentModule.controller('contentController', function ($scope, $http, $window)
 }
 );
 	
+function play(obj)
+{
+   console.log(obj.playLink);
+    var myAudio = document.getElementById("myAudio");
+    var myAudioSrouce = document.getElementById("myAudioSrouce");
+    myAudioSrouce.src = obj.playLink;
+    myAudio.load();
+    myAudio.play();
+	
+}

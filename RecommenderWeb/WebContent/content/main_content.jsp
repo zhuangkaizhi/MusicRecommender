@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
     <!-- Angular JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
     <script src="<%=basePath%>/js/content_manager.js"></script>
 </head>
 <body>
@@ -48,7 +49,6 @@
             </div>
         </div>
         <div class="line"></div>
-        
         <div id="carouselRecommend" class="carousel slide carousel-muti-items" 
              data-ride="carousel" 
              data-interval="false">
@@ -67,7 +67,10 @@
             <div class="carousel-item active">
                 <div class="row carousel-row">
                     <div ng-repeat="obj in recommendSlide1" class="col-sm-3">
-	                    <img ng-src="{{obj.imageCover}}" alt="{{obj.albumName}}" class="carousel-img"/>
+	                    <img ng-src="{{obj.imageCover}}" 
+	                         ng-click="playMusic(obj)"
+	                         alt="{{obj.albumName}}" 
+	                         class="carousel-img"/>
                         <h6><a href="<%=basePath%>{{obj.detailLink}}">{{obj.albumName}}</a></h6>
                         <p>{{obj.albumDescribe}}</p>
                     </div>
@@ -103,9 +106,7 @@
             
           </div>
           <!--/.Slides-->
-           
-          
-          
+
         </div>
     
     </div>
@@ -148,12 +149,13 @@
             <div class="carousel-item active">
                 <div class="row carousel-row">
                     
-                    <div class="col-sm-3">
-                      <img class="carousel-img" 
-                           src="https://cdns-images.dzcdn.net/images/cover/2e018122cb56986277102d2041a592c8/250x250-000000-80-0-0.jpg" 
-                           alt="1 slide"/>
-                      <h6><a href="http://www.google.com">AAAAAAAA</a></h6>
-                      <p>This is an example of an Artist and Album</p>
+                    <div ng-repeat="obj in recommendSlide3" class="col-sm-3">
+                        <img ng-src="{{obj.imageCover}}" 
+                             ng-click="playMusic(obj)"
+                             alt="{{obj.albumName}}" 
+                             class="carousel-img"/>
+                        <h6><a href="<%=basePath%>{{obj.detailLink}}">{{obj.albumName}}</a></h6>
+                        <p>{{obj.albumDescribe}}</p>
                     </div>
                     
                 </div>
@@ -163,12 +165,13 @@
             <div class="carousel-item">
                 <div class="row carousel-row">
 
-                    <div class="col-sm-3">
-                      <img class="carousel-img" 
-                           src="https://cdns-images.dzcdn.net/images/cover/2e018122cb56986277102d2041a592c8/250x250-000000-80-0-0.jpg" 
-                           alt="1 slide"/>
-                      <h6><a href="http://www.google.com">AAAAAAAA</a></h6>
-                      <p>This is an example of an Artist and Album</p>
+                    <div ng-repeat="obj in recommendSlide2" class="col-sm-3">
+                        <img ng-src="{{obj.imageCover}}" 
+                             ng-click="playMusic(obj)"
+                             alt="{{obj.albumName}}" 
+                             class="carousel-img"/>
+                        <h6><a href="<%=basePath%>{{obj.detailLink}}">{{obj.albumName}}</a></h6>
+                        <p>{{obj.albumDescribe}}</p>
                     </div>
 
                 </div>
@@ -178,12 +181,13 @@
             <div class="carousel-item">
                 <div class="row carousel-row">
                     
-                    <div class="col-sm-3">
-                      <img class="carousel-img" 
-                           src="https://cdns-images.dzcdn.net/images/cover/2e018122cb56986277102d2041a592c8/250x250-000000-80-0-0.jpg" 
-                           alt="1 slide"/>
-                      <h6><a href="http://www.google.com">AAAAAAAA</a></h6>
-                      <p>This is an example of an Artist and Album</p>
+                   <div ng-repeat="obj in recommendSlide1" class="col-sm-3">
+                        <img ng-src="{{obj.imageCover}}" 
+                             ng-click="playMusic(obj)"
+                             alt="{{obj.albumName}}" 
+                             class="carousel-img"/>
+                        <h6><a href="<%=basePath%>{{obj.detailLink}}">{{obj.albumName}}</a></h6>
+                        <p>{{obj.albumDescribe}}</p>
                     </div>
 
                 </div>
@@ -193,9 +197,13 @@
           <!--/.Slides-->
         </div>
     </div>
-    
-    
-    
+</div>
+
+
+<div class="row playBar">
+    <audio controls id ="myAudio">
+       <source id="myAudioSrouce" src="" type="audio/mpeg">
+    </audio>
 </div>
 </body>
 </html>

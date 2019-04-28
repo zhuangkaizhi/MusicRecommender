@@ -10,4 +10,5 @@ import recommender.core.entities.Track;
  */
 public interface ITrackDao extends IGenericDao<Track>
 {
+	public Track getTrackByTrackId(int p_trackId);
 }
