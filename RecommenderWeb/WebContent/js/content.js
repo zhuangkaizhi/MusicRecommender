@@ -18,6 +18,21 @@ $(document).ready(function() {
     })
     */
 
+    ////contentPage = "conent/main_content.jsp";
+
 });
 
+
+function changeContent(divSector, value)
+{
+    var myElement = document.getElementById(divSector);
+    myElement.innerHTML = value;
+    //myElement.load();
+    console.log("======");
+}
+
+function goToSignUp()
+{
+    //$('#content').load("user/login.jsp");
+}
 

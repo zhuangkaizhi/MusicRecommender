@@ -4,20 +4,8 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-    <!-- Angular JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
-    <script src="<%=basePath%>/js/content_manager.js"></script>
-</head>
-<body>
-<div    class="container" 
-        ng-app="contentManager" 
-        ng-controller="contentController" 
-        ng-init="loadRecommendAlbum()">
+
+<div    class="container">
 	
 	<!-- >table style="border: thick; border-width: 5px; background-color: blue;" >
         <tr ng-repeat="obj in recommendItems">
@@ -205,5 +193,3 @@
        <source id="myAudioSrouce" src="" type="audio/mpeg">
     </audio>
 </div>
-</body>
-</html>

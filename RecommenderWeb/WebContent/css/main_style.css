@@ -57,7 +57,7 @@ a:focus {
     z-index: 9999;
 }
 
-#navbarIcon {
+#navbar-menuIcon {
 	background-color: inherit;
 	width: 10%;
 }
@@ -68,10 +68,8 @@ a:focus {
 	padding-left: 150px;
 }
 
-.navbar-btn {
-    box-shadow: none;
-    outline: none !important;
-    border: none;
+.nav-item {
+    padding-left: 10px;
 }
 
 #navbarSupportedContent ul li a:hover {
@@ -80,6 +78,14 @@ a:focus {
 }
 
 
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+.btn-primary {
+    background-color: #252525;
+}
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
