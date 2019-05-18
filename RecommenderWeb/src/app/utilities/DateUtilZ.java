@@ -1149,7 +1149,7 @@ public class DateUtilZ
 
 	public static int dateMinus(Date firstDate, Date secondDate)
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
 		String fir = sdf.format(firstDate);
 		String sec = sdf.format(secondDate);
 		int minus = dateMinus(fir, sec);

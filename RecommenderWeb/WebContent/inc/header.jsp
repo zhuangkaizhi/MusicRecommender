@@ -29,12 +29,29 @@
 			<li class="nav-item">
 				<!-- a class="btn btn-primary" href="#"><i class="fa fa-user fa-fw"></i>User</a -->
 			</li>
-			<li class="nav-item">
+			
+			<li class="nav-item" ng-show = "!loginStaus">
 				<button type="button" class="btn btn-primary" ng-click="goToSignUp();">Sign Up</button>
 			</li>
-			<li class="nav-item">
-				<button type="button" class="btn btn-primary">Sign In</button>
+			<li class="nav-item" ng-show="!loginStaus">
+				<button type="button" class="btn btn-primary" ng-click="goToSignIn();">Sign In</button>
 			</li>
+			
+			<li class="nav-item" ng-show="loginStaus">
+                {{userName}}
+            </li>
+			
+			<li class="nav-item" ng-show ="loginStaus">
+			 <div class="dropdown">
+			    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+			         <i class="material-icons" style="font-size:32px;">account_circle</i>
+			    </button>
+			    <div class="dropdown-menu">
+			      <a class="dropdown-item" href="#" ng-click="loginOut();">Sign Out</a>
+			    </div>
+			  </div>
+			</li>
+			
 		</ul>
 	</div>
 </div>

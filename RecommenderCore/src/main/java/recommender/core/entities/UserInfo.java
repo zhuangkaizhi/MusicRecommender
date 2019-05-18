@@ -2,17 +2,13 @@
 package recommender.core.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,12 +39,11 @@ public class UserInfo implements Serializable
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="gender", nullable=false)
-	private CodeGender codeGender;
+	@Column(name="gender", nullable=false)
+	private int gender;
 	
 	@Column(name="create_time", nullable=false)
-	private Timestamp createTime;
+	private Date createTime;
 	
 	/*
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="userInfo")
@@ -113,22 +108,22 @@ public class UserInfo implements Serializable
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public CodeGender getCodeGender()
+	public int getGender()
 	{
-		return codeGender;
+		return gender;
 	}
 
-	public void setCodeGender(CodeGender codeGender)
+	public void setGender(int gender)
 	{
-		this.codeGender = codeGender;
+		this.gender = gender;
 	}
 
-	public Timestamp getCreateTime()
+	public Date getCreateTime()
 	{
 		return createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime)
+	public void setCreateTime(Date createTime)
 	{
 		this.createTime = createTime;
 	}

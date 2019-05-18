@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import recommender.core.entities.Album;
 import recommender.core.entities.AlbumTrack;
 import recommender.core.entities.Artist;
+import recommender.core.entities.PlayLog;
 import recommender.core.entities.Track;
 import recommender.dao.IAlbumDao;
 import recommender.dao.IAlbumTrackDao;
 import recommender.dao.IArtistDao;
 import recommender.dao.IArtistTrackDao;
+import recommender.dao.IPlayLogDao;
 import recommender.dao.ITrackDao;
+import recommender.dao.IUserDao;
+import recommender.web.bean.PlayLogBean;
 import recommender.web.bean.RecommendAlbum;
 import recommender.web.bean.RecommendAlbumSlides;
 import recommender.web.service.IRecommenderService;
@@ -39,7 +43,11 @@ public class RecommenderServiceImpl implements IRecommenderService
 	@Autowired
 	private IArtistTrackDao artistTrackDao;
 	
+	@Autowired
+	private IPlayLogDao playLogDao;
 	
+	@Autowired
+	private IUserDao userDao;
 	
 	
 	public RecommenderServiceImpl()
@@ -176,7 +184,6 @@ public class RecommenderServiceImpl implements IRecommenderService
 		
 	}
 	
-	
 	public List<RecommendAlbum> getRecommendAlbum2(int slideIdx)
 	{
 		List<RecommendAlbum> retList = new ArrayList<RecommendAlbum>();
@@ -275,6 +282,95 @@ public class RecommenderServiceImpl implements IRecommenderService
 		return retList;
 		
 	}
+	
+	@Override
+	public Track getTrackByTrackId(int p_trackId)
+	{
+		Track retEntity = 	trackDao.getTrackByTrackId(p_trackId);
+		return retEntity;
+	}
+
+	@Override
+	public int savePlayLog(PlayLogBean pPlayLogBean)
+	{
+		int retValue = 0;
+		PlayLog obj = new PlayLog();
+		
+		//
+		String albumId = pPlayLogBean.getAlbumId();
+		int	   iAlbumId = 0;
+		String trackId = pPlayLogBean.getTrackId();
+		int	   iTrackId = 0;
+		//
+		if (trackId == null || trackId.equals(""))
+		{
+			if (albumId == null || albumId.equals(""))
+			{
+				return -1;
+			}
+			iAlbumId = Integer.valueOf(albumId);
+			List<AlbumTrack> lstAlbumTrack = albumTrackDao.getAlbumTrackByAlbumId(iAlbumId);
+			AlbumTrack albumTrack = lstAlbumTrack.get(0);
+			iTrackId = albumTrack.getTrackId();
+		}else
+		{
+			iTrackId = Integer.valueOf(trackId);
+		}
+		obj.setTrack_id(iTrackId);
+		
+		//
+		int iUserId = Integer.valueOf(pPlayLogBean.getUserId());
+		obj.setUser_id(iUserId);
+		//
+		obj.setPlayTime(pPlayLogBean.getPlayTime());
+		//
+		obj.setIpAddress(pPlayLogBean.getIpAddress());
+		//
+		obj.setBrowser(pPlayLogBean.getBrowser());
+		//
+		obj.setStartPlayTime(pPlayLogBean.getStartPlayTime());
+		//
+		obj.setEndPlayTime(pPlayLogBean.getEndPlayTime());
+		//
+		obj.setPlayDuration(pPlayLogBean.getPlayDuration());
+
+		try {
+			playLogDao.create(obj);
+			retValue = 0;
+		}catch (Exception e)
+		{
+			retValue = -1;
+			e.printStackTrace();
+		}
+		
+		return retValue;
+	}
+
+	@Override
+	public PlayLog getLatestLogByUserId(int p_userId)
+	{
+		String cause = " WHERE 1=1 and t.user_id=?1 ORDER BY t.playTime DESC ";
+		PlayLog obj = new PlayLog();
+		List<Object> parameters = new ArrayList<>();
+		parameters.add(p_userId);
+		
+		List<PlayLog> list = playLogDao.findByJQL(obj, cause, parameters);
+		if (list!=null && list.size()>0)
+		{
+			return list.get(0);
+		}else
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public void updatePlayLog(PlayLog pPlayLogObj)
+	{
+		playLogDao.update(pPlayLogObj);
+	}
+	
+	
 	
 	
 	

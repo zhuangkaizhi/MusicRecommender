@@ -3,6 +3,8 @@ package recommender.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 /**
  * @author Jason.Zhuang
  * Apr 28, 2019
@@ -11,6 +13,11 @@ import java.util.List;
  */
 public interface IGenericDao<T>
 {
+	/**
+	 * @return
+	 */
+	public EntityManager getEm();
+	
 	/**
 	 * create a new entity save to database
 	 * @param entity
@@ -36,6 +43,15 @@ public interface IGenericDao<T>
      * @return
      */
     T findById(T entity, Serializable id);
+    
+    /**
+     * 
+     * @param entity 
+     * @param cause WHERE t.name = ?1
+     * @param parameters 
+     * @return 
+     */
+    List<T> findByJQL(T entity, String cause, List<Object> parameters );
     
     /**
     * insert a List of entity

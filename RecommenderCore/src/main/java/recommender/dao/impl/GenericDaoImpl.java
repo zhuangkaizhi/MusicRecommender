@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +54,23 @@ public class GenericDaoImpl<T> implements IGenericDao<T>
 	public T findById(T entity, Serializable id)
 	{
 		return (T) em.find(entity.getClass(), id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findByJQL(T entity, String cause, List<Object> parameters)
+	{
+	    String className = entity.getClass().getName();
+		String jql = "SELECT t FROM " +  className + " t ";
+		jql  = jql + cause;
+		TypedQuery<?> query = em.createQuery(jql, entity.getClass()) ;
+		
+		for (int i=0;i<parameters.size();i++)
+		{ 
+			query.setParameter(i+1, parameters.get(i));
+		}
+		
+	    return (List<T>) query.getResultList();
 	}
 
 	@Override
@@ -111,5 +129,14 @@ public class GenericDaoImpl<T> implements IGenericDao<T>
 		em.flush();
 		em.clear();
 	}
+
+	@Override
+	public EntityManager getEm()
+	{
+		return em;
+	}
+	
+	
+	
 	
 }

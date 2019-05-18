@@ -70,7 +70,10 @@
                 <div class="row carousel-row">
                     
                     <div ng-repeat="obj in recommendSlide2" class="col-sm-3">
-                        <img ng-src="{{obj.imageCover}}" alt="{{obj.albumName}}" class="carousel-img"/>
+                        <img ng-src="{{obj.imageCover}}" 
+                             ng-click="playMusic(obj)"
+                             alt="{{obj.albumName}}" 
+                             class="carousel-img"/>
                         <h6><a href="<%=basePath%>{{obj.detailLink}}">{{obj.albumName}}</a></h6>
                         <p>{{obj.albumDescribe}}</p>
                     </div>
@@ -83,7 +86,10 @@
                 <div class="row carousel-row">
                     
                     <div ng-repeat="obj in recommendSlide3" class="col-sm-3">
-                        <img ng-src="{{obj.imageCover}}" alt="{{obj.albumName}}" class="carousel-img"/>
+                        <img ng-src="{{obj.imageCover}}" 
+                             ng-click="playMusic(obj)"
+                             alt="{{obj.albumName}}" 
+                             class="carousel-img"/>
                         <h6><a href="<%=basePath%>{{obj.detailLink}}">{{obj.albumName}}</a></h6>
                         <p>{{obj.albumDescribe}}</p>
                     </div>

@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -268,4 +270,22 @@ public class StaticUtils
 			}
 		}
 	}
+	
+	
+	public static String getClientIp(HttpServletRequest request) 
+	{
+
+        String remoteAddr = "";
+
+        if (request != null) 
+        {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            if (remoteAddr == null || "".equals(remoteAddr)) 
+            {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }
+
+        return remoteAddr;
+    }
 }

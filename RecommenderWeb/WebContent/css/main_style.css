@@ -70,12 +70,21 @@ a:focus {
 
 .nav-item {
     padding-left: 10px;
+    list-style: none;
+    vertical-align: middle;
 }
 
+.dropdown-menu{
+    left: auto;
+    right: 0;
+}
+
+/*
 #navbarSupportedContent ul li a:hover {
 	background-color: blue;
 	color: #ffff;
 }
+*/
 
 
 .material-icons.md-18 { font-size: 18px; }

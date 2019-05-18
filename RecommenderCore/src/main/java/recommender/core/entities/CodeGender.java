@@ -5,8 +5,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -19,7 +17,6 @@ public class CodeGender implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "gender_id")
 	private int genderId;
 
@@ -38,7 +35,7 @@ public class CodeGender implements Serializable
 
 	public int getGenderId()
 	{
-		return this.genderId;
+		return genderId;
 	}
 
 	public void setGenderId(int genderId)
@@ -48,14 +45,14 @@ public class CodeGender implements Serializable
 
 	public String getGenderName()
 	{
-		return this.genderName;
+		return genderName;
 	}
 
 	public void setGenderName(String genderName)
 	{
 		this.genderName = genderName;
 	}
-
+	
 	
 
 }

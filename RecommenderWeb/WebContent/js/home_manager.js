@@ -7,15 +7,20 @@
 */
 var urlBase="http://localhost:8080/recommender";
 var homeModule = angular.module('homeManager', ['ngAnimate']);
+var sessionUserId = "userId";
+var sessionUserName = "userName";
+var contentMainPage = "content/main_content.jsp";
+var contentSignInPage = "user/signIn.jsp";
+var contentSignUpPage = "user/signUp.jsp";
+
 
 homeModule.factory('mySharedService', function($rootScope) 
 {
   var sharedService = {};
-  //
-  sharedService.contentMessage = '';
-  sharedService.prepForRederectContentPage = function(msg) 
+  sharedService.contentPageName = '';
+  sharedService.prepForRederectContentPage = function(pageName) 
   {
-    this.contentMessage = msg;
+    this.contentPageName = pageName;
     $rootScope.$broadcast('broadcastContentPage');
   };
   
@@ -23,19 +28,78 @@ homeModule.factory('mySharedService', function($rootScope)
 });
 
 
-homeModule.controller('headerController', function ($scope, mySharedService) 
+homeModule.factory('sessionService', function($window) 
 {
+   var sessionService = {};
+   
+   sessionService.set = function(key, value)
+   {
+        $window.sessionStorage.setItem(key,value);
+   };
+    
+   sessionService.get = function(key)
+   {
+        return $window.sessionStorage.getItem(key);
+   };
+
+   sessionService.remove = function(key)
+   {
+        $window.sessionStorage.removeItem(key);
+   };
+   
+   return sessionService;
+  
+});
+
+homeModule.controller('headerController', function (mySharedService,sessionService, $scope) 
+{
+    var local_UId = "";
+    var local_UName = "";
     
 	$scope.initFunction = function initFunction()
 	{
-        console.log("== Header -> initFunction ");
+        //console.log("== Header -> initFunction ");
+        local_UId = sessionService.get(sessionUserId);
+        local_UName= sessionService.get(sessionUserName);
+        if (local_UId != null && local_UId != "" && local_UId !="undefined")
+        {
+            $scope.loginStaus = true;
+            $scope.userId = local_UId;
+            $scope.userName = local_UName;
+        }else
+        {
+            $scope.loginStaus = false;
+        }
+        
     }
     
     $scope.goToSignUp = function goToSignUp() 
     {
-        console.log("== click signUp Function");
-        mySharedService.prepForRederectContentPage("user/reg.jsp");
+        //console.log("== click signUp Function");
+        mySharedService.prepForRederectContentPage(contentSignUpPage);
     }
+
+    $scope.goToSignIn = function goToSignIn()
+    {
+        mySharedService.prepForRederectContentPage(contentSignInPage);
+    }
+
+    $scope.$on("broadcastContentPage", function ()
+    {
+        if (mySharedService.contentPageName == contentMainPage)
+        {
+            $scope.initFunction();
+        }
+        
+    })
+
+    $scope.loginOut  = function loginOut()
+    {
+        sessionService.remove(sessionUserId);
+        sessionService.remove(sessionUserName);
+        mySharedService.prepForRederectContentPage(contentMainPage);
+    }   
+
     
 });
 
@@ -52,19 +116,35 @@ homeModule.controller('sliderController', function ($scope)
 
 
 //=========================//
-homeModule.controller('contentController', function ($scope, mySharedService, $http, $document) 
+homeModule.controller('contentController', function (mySharedService,sessionService, $scope, $http, $location) 
 {
-    $scope.$on("broadcastContentPage", function (){
-        $scope.f_changeContent(mySharedService.contentMessage);
-        $scope.initRegForm();
-    })
-    
+    //
     $scope.initFunction = function initFunction()
 	{
         console.log("== Content -> initFunction ");
-        $scope.f_changeContent("content/main_content.jsp");
+        $scope.f_changeContent(contentMainPage);
         $scope.loadRecommendAlbum();
     }
+    //
+    $scope.initRegForm = function initRegForm()
+    {
+       $scope.myUser={};
+       $scope.initBirthDate();
+    }
+    //
+    $scope.initLoginForm = function  initLoginForm()
+    {
+       $scope.myUser={};
+	   $scope.myUser.userEmail="";
+	   $scope.myUser.firstPassword="";
+    }
+    //
+
+    $scope.$on("broadcastContentPage", function ()
+    {
+        $scope.f_changeContent(mySharedService.contentPageName);
+        $scope.initRegForm();
+    })
 
     $scope.f_changeContent = function f_changeContent(value)
 	{
@@ -91,26 +171,7 @@ homeModule.controller('contentController', function ($scope, mySharedService, $h
 			//console.log(response.data);	  
 		});
     }
-    
-    //
-    $scope.initRegForm = function initRegForm()
-    {
-       $scope.myUser={};
 
-       $scope.myUser.userName="";
-	   $scope.myUser.userEmail="";
-	   $scope.myUser.userGender="";
-       
-	   $scope.myUser.userBirthDay="";
-	   $scope.myUser.userBirthMonth="";
-	   $scope.myUser.userBirthYear="";
-
-	   $scope.myUser.firstPassword="";
-       $scope.myUser.secondPassword="";
-       
-       $scope.initBirthDate();
-
-    }
     //
     $scope.validationForm = function validationForm()
     {
@@ -130,15 +191,16 @@ homeModule.controller('contentController', function ($scope, mySharedService, $h
         
         return retValue;
     }
-    //
-    $scope.submitForm  = function submitForm ()
-    {
-        console.log("==================Create Account=============");
-         if ($scope.validationForm() == false)
-         {
-             return;
-         }
 
+    //
+    $scope.submitRegForm  = function submitRegForm ()
+    {
+
+        console.log("==================Create Account=============");
+        if ($scope.validationForm() == false)
+        {
+            return;
+        }
 
         var localUrl = urlBase+'/regUser';
         console.log($scope.myUser);	
@@ -148,20 +210,68 @@ homeModule.controller('contentController', function ($scope, mySharedService, $h
             data:	$scope.myUser
         }).then(function successCallback(response){
             
-        },function errorCallback(response){
-            console.log(response.data);	
-        });
-    
+           //console.log("====ok===="+response.data);
+           $scope.submitLoginForm();
 
+        },function errorCallback(response){
+            
+           //console.log("====not====" + +response.data);
+           $scope.regFail = true;
+            
+        });
 
     }
     
+    //
+    $scope.submitLoginForm  = function submitLoginForm ()
+    {
+        var localUrl = urlBase+'/loginUser';
+        //console.log($scope.myUser);	
+        $http({
+            method: 'POST',
+            url: 	localUrl,
+            data:	$scope.myUser
+        }).then(function successCallback(response)
+        {
+            console.log("==================Sign Succ=============");
+            sessionService.set(sessionUserId,response.data.userId);
+            sessionService.set(sessionUserName,response.data.userName);
+            mySharedService.prepForRederectContentPage(contentMainPage);
 
+            //console.log("==================Sign Succ=============" +sessionService.get(sessionUserName));
+            
+        },function errorCallback(response)
+        {
+            $scope.loginFail = true;
+        });
+    }
 
 
     //
     $scope.playMusic = function playMusic( data )
 	{
+        //console.log(data);
+        var localUrl = urlBase+'/play?';
+        localUrl = localUrl + 'albumId='+ data.albumId;
+        localUrl = localUrl + '&trackId=';
+        
+        var localUId = sessionService.get(sessionUserId);
+        
+        if (localUId != null)
+        {
+            localUrl = localUrl + "&userId=" + localUId;
+            //
+            $http({
+                method: 'GET',
+                url: localUrl
+            }).then(function successCallback(response) {
+                
+
+            }, function errorCallback(response) {
+
+            });
+        }
+
         play(data);
     }
 
@@ -220,18 +330,14 @@ homeModule.controller('contentController', function ($scope, mySharedService, $h
 
 });
 
-
-
-
 function play(obj)
 {
-   console.log(obj.playLink);
+    console.log(obj.playLink);
     var myAudio = document.getElementById("myAudio");
     var myAudioSrouce = document.getElementById("myAudioSrouce");
     myAudioSrouce.src = obj.playLink;
     myAudio.load();
     myAudio.play();
-	
 }
 
 function addClassToElement(elementId, className)
